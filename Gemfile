@@ -9,6 +9,9 @@ gem 'pg'
 gem 'simple_form'
 gem 'twitter-bootstrap-rails'
 gem 'bourbon'
+gem 'email_validator'
+gem 'airbrake'
+gem 'clearance'
 
 # Gems used only for assets and not required
 # in production environments by default.

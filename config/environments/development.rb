@@ -34,4 +34,9 @@ SurveyManager::Application.configure do
 
   # Expands the lines which load the assets
   config.assets.debug = true
+  
+  # config/environments/{development,test}.rb
+  # In production it should be your app's domain name.
+  config.action_mailer.default_url_options = { :host => 'localhost:3000' }
+  
 end
