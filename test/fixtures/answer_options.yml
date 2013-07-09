@@ -1,0 +1,9 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  option_text: MyString
+  question: 
+
+two:
+  option_text: MyString
+  question: 

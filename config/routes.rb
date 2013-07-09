@@ -1,8 +1,17 @@
 SurveyManager::Application.routes.draw do
+  resources :answer_options
+
+
+  resources :questions
+
+
+  resources :question_types
+
+
   resources :surveys
 
 
-  get "root_pages/index"
+  root :to => "surveys#index"
 
   # The priority is based upon order of creation:
   # first created -> highest priority.

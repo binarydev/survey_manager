@@ -11,7 +11,34 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130708210520) do
+ActiveRecord::Schema.define(:version => 20130709032521) do
+
+  create_table "answer_options", :force => true do |t|
+    t.string   "option_text"
+    t.integer  "question_id"
+    t.datetime "created_at",  :null => false
+    t.datetime "updated_at",  :null => false
+  end
+
+  add_index "answer_options", ["question_id"], :name => "index_answer_options_on_question_id"
+
+  create_table "question_types", :force => true do |t|
+    t.string   "type_name"
+    t.boolean  "has_options"
+    t.datetime "created_at",  :null => false
+    t.datetime "updated_at",  :null => false
+  end
+
+  create_table "questions", :force => true do |t|
+    t.string   "question_text"
+    t.integer  "question_type_id"
+    t.integer  "survey_id"
+    t.datetime "created_at",       :null => false
+    t.datetime "updated_at",       :null => false
+  end
+
+  add_index "questions", ["question_type_id"], :name => "index_questions_on_question_type_id"
+  add_index "questions", ["survey_id"], :name => "index_questions_on_survey_id"
 
   create_table "surveys", :force => true do |t|
     t.string   "survey_name"

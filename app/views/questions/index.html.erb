@@ -1,4 +1,4 @@
-<%- model_class = Survey -%>
+<%- model_class = Question -%>
 <div class="page-header">
   <h1><%=t '.title', :default => model_class.model_name.human.pluralize.titleize %></h1>
 </div>
@@ -6,22 +6,26 @@
   <thead>
     <tr>
       <th><%= model_class.human_attribute_name(:id) %></th>
-      <th><%= model_class.human_attribute_name(:survey_name) %></th>
+      <th><%= model_class.human_attribute_name(:question_text) %></th>
+      <th><%= model_class.human_attribute_name(:question_type_id) %></th>
+      <th><%= model_class.human_attribute_name(:survey_id) %></th>
       <th><%= model_class.human_attribute_name(:created_at) %></th>
       <th><%=t '.actions', :default => t("helpers.actions") %></th>
     </tr>
   </thead>
   <tbody>
-    <% @surveys.each do |survey| %>
+    <% @questions.each do |question| %>
       <tr>
-        <td><%= link_to survey.id, survey_path(survey) %></td>
-        <td><%= survey.survey_name %></td>
-        <td><%=l survey.created_at %></td>
+        <td><%= link_to question.id, question_path(question) %></td>
+        <td><%= question.question_text %></td>
+        <td><%= question.question_type_id %></td>
+        <td><%= question.survey_id %></td>
+        <td><%=l question.created_at %></td>
         <td>
           <%= link_to t('.edit', :default => t("helpers.links.edit")),
-                      edit_survey_path(survey), :class => 'btn btn-mini' %>
+                      edit_question_path(question), :class => 'btn btn-mini' %>
           <%= link_to t('.destroy', :default => t("helpers.links.destroy")),
-                      survey_path(survey),
+                      question_path(question),
                       :method => :delete,
                       :data => { :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure?')) },
                       :class => 'btn btn-mini btn-danger' %>
@@ -32,5 +36,5 @@
 </table>
 
 <%= link_to t('.new', :default => t("helpers.links.new")),
-            new_survey_path,
+            new_question_path,
             :class => 'btn btn-primary' %>
