@@ -8,10 +8,42 @@
   <dd><%= @survey.survey_name %></dd>
 </dl>
 
+<h3>Questions:</h3>
+<table class="table table-striped">
+  <tr>
+    <th width="150px">Type</th>
+    <th>Text</th>
+    <th width="150px"></th>
+  </tr>
+  <% @survey.questions.each do |question| %>
+    <tr>
+      <td><%= question.question_type.type_name %></td>
+      <td><%= truncate(question.question_text, :length => 200, :separator => " ") %></td>
+      <td>
+          <%= link_to t('.view', :default => t("helpers.links.view")),
+              survey_question_path(params[:id],question), :class => 'btn btn-mini' %>
+          <%= link_to t('.edit', :default => t("helpers.links.edit")),
+                      edit_survey_question_path(params[:id],question), :class => 'btn btn-mini' %>
+          <%= link_to t('.destroy', :default => t("helpers.links.destroy")),
+                      survey_question_path(params[:id],question),
+                      :method => :delete,
+                      :data => { :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure?')) },
+                      :class => 'btn btn-mini btn-danger' %>
+        
+      </td>
+    </tr>
+  <% end %>
+</table>
+
 <div class="form-actions">
   <%= link_to t('.back', :default => t("helpers.links.back")),
-              surveys_path, :class => 'btn'  %>
-  <%= link_to t('.edit', :default => t("helpers.links.edit")),
+      surveys_path, :class => 'btn' %>
+  &nbsp;&nbsp;
+  | 
+  &nbsp;&nbsp;
+  <%= link_to t('.add_question', :default => t("helpers.links.add_question")),
+              new_survey_question_path(params[:id]), :class => 'btn btn-primary'  %>
+  <%= link_to t('.rename', :default => t("helpers.links.rename")),
               edit_survey_path(@survey), :class => 'btn' %>
   <%= link_to t('.destroy', :default => t("helpers.links.destroy")),
               survey_path(@survey),

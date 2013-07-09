@@ -1,9 +1,9 @@
-<%= simple_form_for @answer_option, :html => { :class => 'form-horizontal' } do |f| %>
+<%= simple_form_for [@survey, @question, @answer_option], :html => { :class => 'form-horizontal' } do |f| %>
   <%= f.input :option_text %>
-  <%= f.input :question_id %>
+  <%= f.hidden_field :question_id, :value => params[:question_id] %>
   <div class="form-actions">
     <%= f.button :submit, :class => 'btn-primary' %>
     <%= link_to t('.cancel', :default => t("helpers.links.cancel")),
-                answer_options_path, :class => 'btn' %>
+                survey_question_answer_options_path(@survey.id, @question.id), :class => 'btn' %>
   </div>
 <% end %>

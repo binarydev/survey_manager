@@ -11,8 +11,16 @@ en:
       destroy: "Delete"
       new: "New"
       edit: "Edit"
+      rename: "Rename"
+      view: 'View'
+      add_question: "Add Question"
+      add_answer_option: "Add Answer Option"
     titles:
       edit: "Edit"
       save: "Save"
       new: "New"
       delete: "Delete"
+      rename: "Rename"
+      view: "View"
+      add_question: "Add Question"
+      add_answer_option: "Add Answer Option"

@@ -25,6 +25,7 @@ class QuestionsController < ApplicationController
   # GET /questions/new.json
   def new
     @question = Question.new
+    @survey = Survey.find(params[:survey_id])
 
     respond_to do |format|
       format.html # new.html.erb
@@ -35,16 +36,17 @@ class QuestionsController < ApplicationController
   # GET /questions/1/edit
   def edit
     @question = Question.find(params[:id])
+    @survey = Survey.find(params[:survey_id])
   end
 
   # POST /questions
   # POST /questions.json
   def create
     @question = Question.new(params[:question])
-
+    @question.survey_id = params[:survey_id]
     respond_to do |format|
       if @question.save
-        format.html { redirect_to @question, notice: 'Question was successfully created.' }
+        format.html { redirect_to survey_question_path(params[:survey_id],@question.id), notice: 'Question was successfully created.' }
         format.json { render json: @question, status: :created, location: @question }
       else
         format.html { render action: "new" }
@@ -60,7 +62,7 @@ class QuestionsController < ApplicationController
 
     respond_to do |format|
       if @question.update_attributes(params[:question])
-        format.html { redirect_to @question, notice: 'Question was successfully updated.' }
+        format.html { redirect_to survey_question_path(params[:survey_id],@question), notice: 'Question was successfully updated.' }
         format.json { head :no_content }
       else
         format.html { render action: "edit" }

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130709032521) do
+ActiveRecord::Schema.define(:version => 20130709173251) do
 
   create_table "answer_options", :force => true do |t|
     t.string   "option_text"
@@ -24,9 +24,8 @@ ActiveRecord::Schema.define(:version => 20130709032521) do
 
   create_table "question_types", :force => true do |t|
     t.string   "type_name"
-    t.boolean  "has_options"
-    t.datetime "created_at",  :null => false
-    t.datetime "updated_at",  :null => false
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
   end
 
   create_table "questions", :force => true do |t|

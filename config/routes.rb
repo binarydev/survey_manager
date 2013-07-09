@@ -1,14 +1,14 @@
 SurveyManager::Application.routes.draw do
-  resources :answer_options
-
-
-  resources :questions
 
 
   resources :question_types
 
 
-  resources :surveys
+  resources :surveys do
+    resources :questions do
+      resources :answer_options
+    end
+  end
 
 
   root :to => "surveys#index"

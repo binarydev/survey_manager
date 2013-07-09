@@ -26,6 +26,9 @@ class AnswerOptionsController < ApplicationController
   def new
     @answer_option = AnswerOption.new
 
+    @question = Question.find(params[:question_id])
+    @survey = Survey.find(params[:survey_id])
+
     respond_to do |format|
       format.html # new.html.erb
       format.json { render json: @answer_option }
@@ -35,6 +38,8 @@ class AnswerOptionsController < ApplicationController
   # GET /answer_options/1/edit
   def edit
     @answer_option = AnswerOption.find(params[:id])
+    @question = Question.find(params[:question_id])
+    @survey = Survey.find(params[:survey_id])
   end
 
   # POST /answer_options
@@ -44,7 +49,7 @@ class AnswerOptionsController < ApplicationController
 
     respond_to do |format|
       if @answer_option.save
-        format.html { redirect_to @answer_option, notice: 'Answer option was successfully created.' }
+        format.html { redirect_to survey_question_answer_options_path(@answer_option.question.survey, @answer_option.question), notice: 'Answer option was successfully created.' }
         format.json { render json: @answer_option, status: :created, location: @answer_option }
       else
         format.html { render action: "new" }

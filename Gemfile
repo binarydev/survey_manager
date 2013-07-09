@@ -12,6 +12,7 @@ gem 'bourbon'
 gem 'email_validator'
 gem 'airbrake'
 gem 'clearance'
+gem 'thin'
 
 # Gems used only for assets and not required
 # in production environments by default.
@@ -41,3 +42,10 @@ gem 'jquery-rails'
 
 # To use debugger
 # gem 'debugger'
+
+
+group :development do
+  gem 'better_errors'
+  gem 'sextant'
+  gem 'binding_of_caller'
+end
