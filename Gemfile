@@ -12,7 +12,6 @@ gem 'bourbon'
 gem 'email_validator'
 gem 'airbrake'
 gem 'clearance'
-gem 'thin'
 
 # Gems used only for assets and not required
 # in production environments by default.
