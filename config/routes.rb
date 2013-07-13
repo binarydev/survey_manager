@@ -5,6 +5,9 @@ SurveyManager::Application.routes.draw do
 
 
   resources :surveys do
+    get 'open' => "surveys#open"
+    post 'submit_response' => "surveys#submit_response"
+    
     resources :questions do
       resources :answer_options
     end

@@ -19,6 +19,8 @@
         <td><%= survey.created_at.strftime("%B %d, %Y") %></td>
         <td>
           <%= link_to t('.view', :default => t("helpers.links.view")),
+              survey_open_path(survey), :class => 'btn btn-mini btn-primary' %>
+          <%= link_to t('.edit', :default => t("helpers.links.edit")),
                       survey_path(survey), :class => 'btn btn-mini' %>
           <%= link_to t('.rename', :default => t("helpers.links.rename")),
                       edit_survey_path(survey), :class => 'btn btn-mini' %>

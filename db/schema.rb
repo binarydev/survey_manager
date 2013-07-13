@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130709173251) do
+ActiveRecord::Schema.define(:version => 20130712184051) do
 
   create_table "answer_options", :force => true do |t|
     t.string   "option_text"
@@ -41,8 +41,10 @@ ActiveRecord::Schema.define(:version => 20130709173251) do
 
   create_table "surveys", :force => true do |t|
     t.string   "survey_name"
-    t.datetime "created_at",  :null => false
-    t.datetime "updated_at",  :null => false
+    t.datetime "created_at",    :null => false
+    t.datetime "updated_at",    :null => false
+    t.text     "intro_text"
+    t.text     "thankyou_text"
   end
 
   create_table "users", :force => true do |t|

@@ -5,7 +5,11 @@
 
 <dl class="dl-horizontal">
   <dt><strong><%= model_class.human_attribute_name(:survey_name) %>:</strong></dt>
-  <dd><%= @survey.survey_name %></dd>
+  <dd><%= @survey.survey_name %><br><br></dd>
+  <dt><strong><%= model_class.human_attribute_name(:intro_text) %>:</strong></dt>
+  <dd><%= @survey.intro_text %><br><br></dd>
+  <dt><strong><%= model_class.human_attribute_name(:thank_you_text) %>:</strong></dt>
+  <dd><%= @survey.thankyou_text %></dd>
 </dl>
 
 <h3>Questions:</h3>
@@ -43,7 +47,7 @@
   &nbsp;&nbsp;
   <%= link_to t('.add_question', :default => t("helpers.links.add_question")),
               new_survey_question_path(params[:id]), :class => 'btn btn-primary'  %>
-  <%= link_to t('.rename', :default => t("helpers.links.rename")),
+  <%= link_to t('.edit', :default => t("helpers.links.edit")),
               edit_survey_path(@survey), :class => 'btn' %>
   <%= link_to t('.destroy', :default => t("helpers.links.destroy")),
               survey_path(@survey),

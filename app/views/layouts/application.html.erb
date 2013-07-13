@@ -34,9 +34,9 @@
     <!-- Size should be 32 x 32 pixels -->
     <%= favicon_link_tag 'favicon.ico', :rel => 'shortcut icon' %>
   </head>
-  <body>
+  <body class="<%= @hide_layout.nil? ? '' : 'hidden-layout' %>">
 
-    <div class="navbar">
+    <div class="navbar <%= @hide_layout.nil? ? '' : 'hidden' %>">
       <div class="navbar-inner">
         <div class="container">
           <a class="btn btn-navbar" data-target=".nav-collapse" data-toggle="collapse">
@@ -58,11 +58,11 @@
 
     <div class="container">
         <div class="row">
-          <div class="span9">
+          <div class="<%= @hide_layout.nil? ? 'span9' : 'span12' %>">
             <%= bootstrap_flash %>
             <%= yield %>
           </div>
-          <div class="span3">
+          <div class="<%= @hide_layout.nil? ? 'span3' : 'hidden' %>">
             <div class="well sidebar-nav">
               <h3>Navigation</h3>
               <ul class="nav nav-list">
@@ -75,7 +75,7 @@
           </div><!--/span-->
         </div><!--/row-->
 
-      <footer>
+      <footer class="<%= @hide_layout.nil? ? '' : 'hidden' %>">
         <p>&copy; Survey Manager 2013</p>
       </footer>
 

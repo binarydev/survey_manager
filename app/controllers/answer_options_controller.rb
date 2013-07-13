@@ -49,7 +49,7 @@ class AnswerOptionsController < ApplicationController
 
     respond_to do |format|
       if @answer_option.save
-        format.html { redirect_to survey_question_answer_options_path(@answer_option.question.survey, @answer_option.question), notice: 'Answer option was successfully created.' }
+        format.html { redirect_to survey_question_path(@answer_option.question.survey, @answer_option.question), notice: 'Answer option was successfully created.' }
         format.json { render json: @answer_option, status: :created, location: @answer_option }
       else
         format.html { render action: "new" }

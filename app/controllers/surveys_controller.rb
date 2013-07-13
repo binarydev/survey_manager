@@ -72,7 +72,7 @@ class SurveysController < ApplicationController
   # DELETE /surveys/1
   # DELETE /surveys/1.json
   def destroy
-    @survey = Survey.find(params[:id])
+    @survey = Survey.find(params[:survey_id])
     @survey.destroy
 
     respond_to do |format|
@@ -80,4 +80,14 @@ class SurveysController < ApplicationController
       format.json { head :no_content }
     end
   end
+  
+  def open
+    @hide_layout = true
+    @survey = Survey.find(params[:survey_id])
+  end
+  
+  def submit_response
+  
+  end
+  
 end
