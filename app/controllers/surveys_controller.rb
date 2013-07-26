@@ -84,6 +84,7 @@ class SurveysController < ApplicationController
   def open
     @hide_layout = true
     @survey = Survey.find(params[:survey_id])
+    @survey_resp = SurveyResponse.new({ :survey_id => @survey.id })
   end
   
   def submit_response

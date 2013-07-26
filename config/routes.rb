@@ -1,6 +1,9 @@
 SurveyManager::Application.routes.draw do
 
 
+  resources :survey_responses
+
+
   resources :question_types
 
 

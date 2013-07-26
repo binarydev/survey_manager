@@ -7,6 +7,41 @@
   <%= @survey.intro_text %>
 </div>
 
-<%= link_to 'Submit',
-            survey_submit_response_path(@survey),
-            :class => 'btn btn-primary' %>
+<div class="survey_form_wrapper">
+  <%= simple_form_for @survey_resp, :url => survey_submit_response_path(@survey), :method => :post do |f| %>
+    <ul>
+      <%= simple_fields_for :survey_responses do |resp_form| %>
+        <% @survey.questions.each do |question| %>
+          <li>
+            <dt><%= question.question_text %></dt>
+          </li>
+          <li>
+            <dd>
+            <% if question.question_type.single_option? %>
+              <ul>
+              <% question.answer_options.each do |option| %>
+                <li>
+                <%= resp_form.radio_button question.id.to_s, option.option_text, :label_value => option.option_text %>
+                </li>
+              <% end %>
+              </ul>
+            <% elsif question.question_type.single_option? %>
+            
+              
+            
+            
+            <% end %>
+            </dd>
+          </li>
+        
+        <% end %>
+      <% end %>
+    </ul>
+    <div class="divider"></div>
+      <div class="divider"></div>
+    <p>
+      <%= f.button :submit, :class => 'btn-primary', :value => "Submit" %>
+    </p>
+  <% end %>
+
+</div>

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130712184051) do
+ActiveRecord::Schema.define(:version => 20130726144507) do
 
   create_table "answer_options", :force => true do |t|
     t.string   "option_text"
@@ -38,6 +38,15 @@ ActiveRecord::Schema.define(:version => 20130712184051) do
 
   add_index "questions", ["question_type_id"], :name => "index_questions_on_question_type_id"
   add_index "questions", ["survey_id"], :name => "index_questions_on_survey_id"
+
+  create_table "survey_responses", :force => true do |t|
+    t.integer  "survey_id"
+    t.hstore   "survey_responses"
+    t.datetime "created_at",       :null => false
+    t.datetime "updated_at",       :null => false
+  end
+
+  add_index "survey_responses", ["survey_id"], :name => "index_survey_responses_on_survey_id"
 
   create_table "surveys", :force => true do |t|
     t.string   "survey_name"
