@@ -2,7 +2,7 @@ class QuestionsController < ApplicationController
   # GET /questions
   # GET /questions.json
   def index
-    @questions = Question.all
+    @questions = Question.order(:order_num).all
 
     respond_to do |format|
       format.html # index.html.erb
@@ -14,7 +14,7 @@ class QuestionsController < ApplicationController
   # GET /questions/1.json
   def show
     @question = Question.find(params[:id])
-
+    gon.orderPostPath = survey_question_answer_options_bulk_update_order_path(params[:survey_id], params[:id])
     respond_to do |format|
       format.html # show.html.erb
       format.json { render json: @question }
@@ -46,7 +46,13 @@ class QuestionsController < ApplicationController
     @question.survey_id = params[:survey_id]
     respond_to do |format|
       if @question.save
-        format.html { redirect_to survey_question_path(params[:survey_id],@question.id), notice: 'Question was successfully created.' }
+        
+        if (@question.question_type.short_text? || @question.question_type.open_ended_text?)
+          path = survey_path(params[:survey_id])
+        else
+          path = survey_question_path(params[:survey_id],@question.id)
+        end
+        format.html { redirect_to path, notice: 'Question was successfully created.' }
         format.json { render json: @question, status: :created, location: @question }
       else
         format.html { render action: "new" }
@@ -62,7 +68,12 @@ class QuestionsController < ApplicationController
 
     respond_to do |format|
       if @question.update_attributes(params[:question])
-        format.html { redirect_to survey_question_path(params[:survey_id],@question), notice: 'Question was successfully updated.' }
+        if (@question.question_type.short_text? || @question.question_type.open_ended_text?)
+          path = survey_path(params[:survey_id])
+        else
+          path = survey_question_path(params[:survey_id],@question.id)
+        end
+        format.html { redirect_to path, notice: 'Question was successfully updated.' }
         format.json { head :no_content }
       else
         format.html { render action: "edit" }
@@ -82,4 +93,30 @@ class QuestionsController < ApplicationController
       format.json { head :no_content }
     end
   end
+  
+  def bulk_update_order
+    
+    question = nil
+    failed = false
+    
+    params[:items].each_with_index do |item,index|      
+      question = Question.find(item)
+      question.order_num = index
+      question.save!
+    end
+
+    params[:items].each_with_index do |item,index|
+      question = Question.find(item)
+      if question.order_num != index + 1
+        failed = true
+      end
+    end
+
+    if failed == false
+      render :json => {:result => :success}
+    else
+      render :json => {:result => :failed}
+    end
+  end
+
 end

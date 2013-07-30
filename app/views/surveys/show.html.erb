@@ -13,7 +13,12 @@
 </dl>
 
 <h3>Questions:</h3>
-<table class="table table-striped">
+
+<input type='button' id='reorder_btn' value="Reorder Items" class="btn btn-secondary" autocomplete="off" />
+<br>
+<br>
+
+<table class="table table-striped items-table">
   <tr>
     <th width="150px">Type</th>
     <th>Text</th>
@@ -38,6 +43,13 @@
     </tr>
   <% end %>
 </table>
+
+<ul class="sortable inline-block">
+  <% @survey.questions.each do |question| %>
+    <li class="icon-resize-vertical listing-item" id="<%= question.id %>">&nbsp;&nbsp;<%= question.question_text %><br></li>
+  <% end %>
+</ul>
+
 
 <div class="form-actions">
   <%= link_to t('.back', :default => t("helpers.links.back")),

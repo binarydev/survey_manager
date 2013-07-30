@@ -4,6 +4,6 @@
   <div class="form-actions">
     <%= f.button :submit, :class => 'btn-primary' %>
     <%= link_to t('.cancel', :default => t("helpers.links.cancel")),
-                survey_question_answer_options_path(@survey.id, @question.id), :class => 'btn' %>
+                survey_question_path(@survey.id, @question.id), :class => 'btn' %>
   </div>
 <% end %>

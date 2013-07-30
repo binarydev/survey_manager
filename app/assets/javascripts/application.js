@@ -14,3 +14,58 @@
 //= require jquery_ujs
 //= require twitter/bootstrap
 //= require_tree .
+
+$(document).ready(function(){
+  
+  $('.sortable').hide();
+  
+  $(".sortable").sortable({
+  });
+  
+  $(".sortable").sortable('option', 'disabled', true);
+  
+  
+  $('#reorder_btn').click(function(){
+    
+    $('.items-table').toggle();
+    $('.sortable').toggle();
+    if($( ".sortable" ).sortable( "option", "disabled" ) == true)
+    {
+      $(".sortable").sortable('option', 'disabled', false);
+      $('.sortable').disableSelection();
+      $('#reorder_btn').val('Save Order');
+    }else{
+      $(".sortable").sortable('option', 'disabled', true);
+      $(".sortable").enableSelection();
+      $('#reorder_btn').attr('disabled', true); 
+      $('#reorder_btn').val('Saving Order...'); 
+      
+      indexed_list = getItemOrder();
+      postPath = '';
+      if( !(typeof window.gon === 'undefined')){
+        if(window.gon.orderPostPath != undefined){
+          postPath = window.gon.orderPostPath;
+        }
+      }
+      
+      if(postPath != ''){
+        $.post(postPath, { 'items[]': indexed_list },
+         function(data) {
+           document.location.reload(true);
+        });
+      }
+      
+    }
+  });
+  
+});
+
+
+function getItemOrder(){
+  items = new Array();
+  $('.sortable').children('.listing-item').each(function(){
+    item_id = $(this).attr('id');
+    items.push(item_id);
+  });
+  return items
+}

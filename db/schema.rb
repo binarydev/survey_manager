@@ -11,13 +11,14 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130726144507) do
+ActiveRecord::Schema.define(:version => 20130730081004) do
 
   create_table "answer_options", :force => true do |t|
     t.string   "option_text"
     t.integer  "question_id"
     t.datetime "created_at",  :null => false
     t.datetime "updated_at",  :null => false
+    t.integer  "order_num"
   end
 
   add_index "answer_options", ["question_id"], :name => "index_answer_options_on_question_id"
@@ -32,8 +33,10 @@ ActiveRecord::Schema.define(:version => 20130726144507) do
     t.string   "question_text"
     t.integer  "question_type_id"
     t.integer  "survey_id"
-    t.datetime "created_at",       :null => false
-    t.datetime "updated_at",       :null => false
+    t.datetime "created_at",              :null => false
+    t.datetime "updated_at",              :null => false
+    t.integer  "order_num"
+    t.integer  "prereq_answer_option_id"
   end
 
   add_index "questions", ["question_type_id"], :name => "index_questions_on_question_type_id"

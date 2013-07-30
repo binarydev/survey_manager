@@ -2,7 +2,7 @@ class AnswerOptionsController < ApplicationController
   # GET /answer_options
   # GET /answer_options.json
   def index
-    @answer_options = AnswerOption.all
+    @answer_options = AnswerOption.order(:order_num).all
 
     respond_to do |format|
       format.html # index.html.erb
@@ -65,12 +65,37 @@ class AnswerOptionsController < ApplicationController
 
     respond_to do |format|
       if @answer_option.update_attributes(params[:answer_option])
-        format.html { redirect_to @answer_option, notice: 'Answer option was successfully updated.' }
+        format.html { redirect_to survey_question_path(@answer_option.question.survey, @answer_option.question), notice: 'Answer option was successfully updated.' }
         format.json { head :no_content }
       else
         format.html { render action: "edit" }
         format.json { render json: @answer_option.errors, status: :unprocessable_entity }
       end
+    end
+  end
+  
+  def bulk_update_order
+    
+    option = nil
+    failed = false
+    
+    params[:items].each_with_index do |item,index|      
+      option = AnswerOption.find(item)
+      option.order_num = index
+      option.save!
+    end
+
+    params[:items].each_with_index do |item,index|
+      option = AnswerOption.find(item)
+      if option.order_num != index + 1
+        failed = true
+      end
+    end
+
+    if failed == false
+      render :json => {:result => :success}
+    else
+      render :json => {:result => :failed}
     end
   end
 

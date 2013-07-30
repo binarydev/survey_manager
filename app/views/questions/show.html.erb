@@ -12,11 +12,14 @@
   <dd><%= @question.survey.survey_name %></dd>
 </dl>
 
-
+<% if !@question.question_type.short_text? && !@question.question_type.open_ended_text? %>
 
 <h3>Answer Options</h3>
 
-<table class="table table-striped">
+<input type='button' id='reorder_btn' value="Reorder Items" class="btn btn-secondary" autocomplete="off" />
+<br>
+<br>
+<table class="table table-striped items-table">
   <tr>
     <th>Answer Option Text</th>
     <th width="150px"></th>
@@ -38,15 +41,27 @@
   <% end %>
 </table>
 
+<ul class="sortable inline-block">
+  <% @question.answer_options.each do |option| %>
+    <li class="icon-resize-vertical listing-item" id="<%= option.id %>">&nbsp;&nbsp;<%= option.option_text %><br></li>
+  <% end %>
+</ul>
+
+<% end %>
+
 
 <div class="form-actions">
   <%= link_to t('.back', :default => t("helpers.links.back")),
-              survey_questions_path(params[:survey_id]), :class => 'btn'  %>
+              survey_path(params[:survey_id]), :class => 'btn'  %>
   &nbsp;&nbsp;
   | 
   &nbsp;&nbsp;
-  <%= link_to t('.add_answer_option', :default => t("helpers.links.add_answer_option")),
-              new_survey_question_answer_option_path(params[:survey_id], @question), :class => 'btn btn-primary'  %>
+  
+  <% if !@question.question_type.short_text? && !@question.question_type.open_ended_text? %>
+    <%= link_to t('.add_answer_option', :default => t("helpers.links.add_answer_option")),
+                new_survey_question_answer_option_path(params[:survey_id], @question), :class => 'btn btn-primary'  %>
+  <% end %>
+  
   <%= link_to t('.edit', :default => t("helpers.links.edit")),
               edit_survey_question_path(params[:survey_id],@question), :class => 'btn' %>
   <%= link_to t('.destroy', :default => t("helpers.links.destroy")),
