@@ -1,5 +1,5 @@
 class SurveysController < ApplicationController
-  skip_before_filter :authorize
+  skip_before_filter :authorize, :only => [:open, :submit_response]
 
   # GET /surveys
   # GET /surveys.json
@@ -90,7 +90,21 @@ class SurveysController < ApplicationController
   end
   
   def submit_response
-  
+    @hide_layout = true
+    @survey = Survey.find(params[:survey_id])
+    @survey_response = SurveyResponse.new()
+    @survey_response.survey_id = @survey.id
+    @survey_response.survey_responses = params[:survey_responses]
+
+    respond_to do |format|
+      if @survey_response.save
+        format.html
+        format.json { render json: { 'thankyou_text' => @survey.thankyou_text} , status: :created, location: @survey_response }
+      else
+        format.html { render action: "open" }
+        format.json { render json: @survey.errors, status: :unprocessable_entity }
+      end
+    end
   end
   
 end
