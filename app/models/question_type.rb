@@ -5,7 +5,9 @@ class QuestionType < ActiveRecord::Base
   delegate :single_option?, :multi_option?, :ranking?, :short_text?, :open_ended_text?, :to => :question_type_name
   
   def question_type_name
-    self.type_name.gsub(/ /,'_').downcase.inquiry
+    type_name = self.type_name.gsub(/ /,'_').downcase
+    type_name.gsub(/-/,'_').downcase.inquiry
+    
   end
   
 end

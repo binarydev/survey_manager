@@ -3,45 +3,79 @@
   <h1><%= @survey.survey_name %></h1>
 </div>
 
-<div>
-  <%= @survey.intro_text %>
-</div>
+<% if !@survey.intro_text.blank? %>
+  <div>
+    <h4>
+    <%= @survey.intro_text %>
+    </h4>
+  </div>
+  
+  <hr>
+<% end %>
 
-<div class="survey_form_wrapper">
-  <%= simple_form_for @survey_resp, :url => survey_submit_response_path(@survey), :method => :post do |f| %>
-    <ol>
-      <%= simple_fields_for :survey_responses do |resp_form| %>
-        <% @survey.questions.each do |question| %>
-          <li>
-            <dt><%= question.question_text %></dt>
-          </li>
-          <li class="unstyled">
-            <dd>
-            <% if question.question_type.single_option? %>
-              <ul class="unstyled">
-              <% question.answer_options.each do |option| %>
-                <li>
-                <%= resp_form.radio_button question.id.to_s, option.option_text, :label_value => option.option_text %>
-                </li>
-              <% end %>
-              </ul>
-            <% elsif question.question_type.single_option? %>
-            
+<div class="survey_form_wrapper row">
+  <div>
+    <%= simple_form_for @survey_resp, :url => survey_submit_response_path(@survey), :method => :post do |f| %>
+      <ol>
+        <%= simple_fields_for :survey_responses do |resp_form| %>
+          <% @survey.questions.each_with_index do |question, index_num| %>
+            <li value = "<%= index_num+1 %>">
+              <dt><%= question.question_text %></dt>
+            </li>
+            <li class="unstyled">
+              <br>
+              <% if question.question_type.single_option? %>
               
+                <ul class="unstyled">
+                  <li>
+                    <% question.answer_options.each_with_index do |option, option_index_num| %>
+      
+                        <label class="radio">
+                          <%= resp_form.radio_button question.id.to_s, option.id, :inline => true %>
+                          <%= option.option_text %>
+                        </label>
+      
+                    <% end %>
+                  </li>
+                </ul>
+                
+              <% elsif question.question_type.multi_option? %>
+              
+                <ul class="unstyled">
+                  <li>
+                    <% question.answer_options.each_with_index do |option, option_index_num| %>
+                        <label class="checkbox">
+                          <%= resp_form.check_box question.id.to_s, :value => option.id%>
+                          <%= option.option_text %>
+                        </label>
+  
+                    <% end %>
+                  </li>
+                </ul>
+                
+              
+              <% elsif question.question_type.short_text? %>
+              
+                <%= resp_form.text_field question.id.to_s, :placeholder => 'Enter Answer Here' %>
+              
+              <% elsif question.question_type.open_ended_text? %>
+              
+                <%= resp_form.text_area question.id.to_s, :placeholder => 'Enter Answer Here', :rows => 5, :cols => 30 %>
+              
+              <% end %>
+              
+              <br><br>
+  
             
-            
-            <% end %>
-            </dd>
-          
-          </li>
+            </li>
+          <% end %>
         <% end %>
-      <% end %>
-    </ol>
-    <div class="divider"></div>
+      </ol>
       <div class="divider"></div>
-    <p>
-      <%= f.button :submit, :class => 'btn-primary', :value => "Submit" %>
-    </p>
-  <% end %>
-
+        <div class="divider"></div>
+      <p>
+        <%= f.button :submit, :class => 'btn-primary', :value => "Submit" %>
+      </p>
+    <% end %>
+  </div>
 </div>

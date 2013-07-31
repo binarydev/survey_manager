@@ -6,4 +6,6 @@
 #   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
 #   Mayor.create(name: 'Emanuel', city: cities.first)
 
+QuestionType.destroy_all
+
 QuestionType.create([{ type_name: 'Single Option'}, {type_name: 'Multi-Option'}, {type_name: 'Ranking'}, {type_name: 'Short Text'}, {type_name: 'Open-Ended Text'}])

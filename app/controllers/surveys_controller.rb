@@ -1,4 +1,6 @@
 class SurveysController < ApplicationController
+  skip_before_filter :authorize
+
   # GET /surveys
   # GET /surveys.json
   def index

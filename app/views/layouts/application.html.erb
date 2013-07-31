@@ -33,9 +33,14 @@
           <a class="brand" href="/">Survey Manager</a>
           <div class="container nav-collapse">
             <ul class="nav">
-              <li><%= link_to "Surveys", "/surveys"  %></li>
-              <li><%= link_to "Users", "/users"  %></li>
-              <li><%= link_to "Generated Reports", "/reports"  %></li>
+              <% if signed_in? %>
+                <li><%= link_to "Surveys", "/surveys"  %></li>
+                <li><%= link_to "Users", "/users"  %></li>
+                <li><%= link_to "Reports", "/reports"  %></li>
+                <li><%= link_to "Sign out", sign_out_path, method: :delete %></li>
+              <% else %>
+                <li><%= link_to "Sign in", sign_in_path %></li>
+              <% end %>
             </ul>
           </div><!--/.nav-collapse -->
         </div>
@@ -53,9 +58,14 @@
               <h3>Navigation</h3>
               <ul class="nav nav-list">
                 <li class="nav-header">Sections</li>
-                <li><%= link_to "Surveys", "/surveys"  %></li>
-                <li><%= link_to "Users", "/users"  %></li>
-                <li><%= link_to "Generated Reports", "/reports"  %></li>
+                <% if signed_in? %>
+                  <li><%= link_to "Surveys", "/surveys"  %></li>
+                  <li><%= link_to "Users", "/users"  %></li>
+                  <li><%= link_to "Reports", "/reports"  %></li>
+                  <li><%= link_to "Sign out", sign_out_path, method: :delete %></li>
+                <% else %>
+                  <li><%= link_to "Sign in", sign_in_path %></li>
+                <% end %>
               </ul>
             </div><!--/.well -->
           </div><!--/span-->
