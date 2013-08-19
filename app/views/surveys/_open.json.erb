@@ -1,5 +1,6 @@
 {
   "survey": <%= raw(@survey.to_json) %>,
+  "target_url": "<%= survey_submit_response_url(@survey)%>",
   "questions": [
     <% @survey.questions.each_with_index do |q,index| %>
       {
