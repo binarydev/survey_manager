@@ -87,6 +87,10 @@ class SurveysController < ApplicationController
     @hide_layout = true
     @survey = Survey.find(params[:survey_id])
     @survey_resp = SurveyResponse.new({ :survey_id => @survey.id })
+    respond_to do |format|
+      format.html
+      format.json {render :partial => 'surveys/open.json'}
+    end
   end
   
   def submit_response
