@@ -8,7 +8,7 @@
         "question_text": "<%= raw q.question_text.gsub("\"", "'") %>",
         "question_type": "<%= raw q.question_type.type_name %>",
         "order_num": "<%= raw q.order_num %>"
-        <% if q.question_type.type_name == "Single Option" || q.question_type.type_name == "Multi-Option"
+        <% if q.question_type.type_name == "Single Option" || q.question_type.type_name == "Multi-Option" %>
           ,"answer_options": [
               <% q.answer_options.each_with_index do |a, index| %>
                 {
