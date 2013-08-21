@@ -1,9 +1,6 @@
 SurveyManager::Application.routes.draw do
 
 
-  resources :survey_responses
-
-
   resources :question_types
 
 
@@ -11,7 +8,8 @@ SurveyManager::Application.routes.draw do
     get 'open' => "surveys#open"
     post 'submit_response' => "surveys#submit_response"
     post 'questions/bulk_update_order' => 'questions#bulk_update_order'
-
+    
+    resources :survey_responses
     
     resources :questions do
       post 'answer_options/bulk_update_order' => 'answer_options#bulk_update_order'

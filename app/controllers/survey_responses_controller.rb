@@ -2,8 +2,11 @@ class SurveyResponsesController < ApplicationController
   # GET /survey_responses
   # GET /survey_responses.json
   def index
+    @survey = Survey.find(params[:survey_id])
     @survey_responses = SurveyResponse.all
-
+    
+    convert_responses(@survey_responses)
+    
     respond_to do |format|
       format.html # index.html.erb
       format.json { render json: @survey_responses }
@@ -14,6 +17,8 @@ class SurveyResponsesController < ApplicationController
   # GET /survey_responses/1.json
   def show
     @survey_response = SurveyResponse.find(params[:id])
+    
+    convert_responses([@survey_response])
 
     respond_to do |format|
       format.html # show.html.erb
@@ -44,7 +49,7 @@ class SurveyResponsesController < ApplicationController
 
     respond_to do |format|
       if @survey_response.save
-        format.html { redirect_to @survey_response, notice: 'Survey response was successfully created.' }
+        format.html { redirect_to survey_survey_responses_path(params[:survey_id]), notice: 'Survey response was successfully created.' }
         format.json { render json: @survey_response, status: :created, location: @survey_response }
       else
         format.html { render action: "new" }
@@ -60,7 +65,7 @@ class SurveyResponsesController < ApplicationController
 
     respond_to do |format|
       if @survey_response.update_attributes(params[:survey_response])
-        format.html { redirect_to @survey_response, notice: 'Survey response was successfully updated.' }
+        format.html { redirect_to survey_survey_responses_path(params[:survey_id]), notice: 'Survey response was successfully updated.' }
         format.json { head :no_content }
       else
         format.html { render action: "edit" }
@@ -76,8 +81,48 @@ class SurveyResponsesController < ApplicationController
     @survey_response.destroy
 
     respond_to do |format|
-      format.html { redirect_to survey_responses_url }
+      format.html { redirect_to survey_survey_responses_path(params[:survey_id]) }
       format.json { head :no_content }
     end
+  end
+  
+  def convert_responses(survey_responses)
+    @responses = []
+    x = 0
+
+    survey_responses.each do |survey_response|
+
+      x += 1
+      @responses[x] = []
+      
+      survey_response.survey_responses.each do |question,response|
+        
+        if (response.to_i > 0)
+          @responses[x].push([ Question.find(question.to_i),AnswerOption.find(response.to_i) ])
+        else
+          if(Question.find(question.to_i).question_type.multi_option?)
+            
+            options = response[1..response.length-2].split(',')
+            options.each_with_index do |option, index|
+              options[index] = AnswerOption.find(option.gsub(' ','').gsub('"','').to_i)
+            end
+            @responses[x].push([ Question.find(question.to_i), options ])
+            
+          else
+            @responses[x].push([ Question.find(question.to_i), response ])
+          end
+        end
+      end
+      
+      @responses[x] = @responses[x].sort_by{ |r| r[0].order_num}  
+    end
+    
+    @responses.each do |r|
+      if r.nil?
+        @responses.delete r
+      end
+    end
+    
+    
   end
 end

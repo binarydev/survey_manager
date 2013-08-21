@@ -1,25 +1,49 @@
-<h1>Listing survey_responses</h1>
+<h1>
+  <%= @survey.survey_name %>
+</h1>
 
-<table>
-  <tr>
-    <th>Survey</th>
-    <th>Survey responses</th>
-    <th></th>
-    <th></th>
-    <th></th>
-  </tr>
+<h3>Survey Responses</h3>
 
-<% @survey_responses.each do |survey_response| %>
-  <tr>
-    <td><%= survey_response.survey %></td>
-    <td><%= survey_response.survey_responses %></td>
-    <td><%= link_to 'Show', survey_response %></td>
-    <td><%= link_to 'Edit', edit_survey_response_path(survey_response) %></td>
-    <td><%= link_to 'Destroy', survey_response, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-  </tr>
+<% @survey_responses.each_with_index do |survey_response, index| %>
+  <table class="table table-striped table-bordered">
+    <tr>
+      <th>Question</th>
+      <th>Answer</th>
+      <th colspan="4" style="text-align:right;"></th>
+    </tr>
+
+    <% @responses[index].each do |response| %>
+      <tr>
+        <td><%= response[0].question_text %></td>
+        <td colspan="4">
+          <% if response[1].is_a? String %>
+            <%= response[1] %>
+          <% elsif response[0].question_type.single_option? %>
+            <%= response[1].option_text %>
+          <% elsif response[0].question_type.multi_option? && (response[1].is_a? Array) %>
+            <% response[1].each do |option| %>
+              <%= option.option_text %>
+              <% if option != response[1].last %>
+                <br>
+              <% end %>
+            <% end %>
+          <% elsif response[1].is_a? AnswerOption %>
+            <%= response[1].option_text %>
+          <% elsif response[1].to_i != 0 %>
+            <%= response[1] %>
+          <% end %>
+        </td>
+      </tr>
+    <% end %>
+   
+  </table>
+  <p align="right">
+    <%= link_to 'Show', survey_survey_response_path(params[:survey_id],survey_response) %> | 
+    <%#= link_to 'Edit', edit_survey_survey_response_path(@survey,survey_response) %>
+    <%= link_to 'Destroy', survey_survey_response_path(@survey, survey_response), method: :delete, data: { confirm: 'Are you sure?' } %></th>
+  </p>
+  <hr>
 <% end %>
-</table>
+
 
 <br />
-
-<%= link_to 'New Survey response', new_survey_response_path %>

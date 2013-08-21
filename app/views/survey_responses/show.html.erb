@@ -1,15 +1,40 @@
 <p id="notice"><%= notice %></p>
 
-<p>
-  <b>Survey:</b>
-  <%= @survey_response.survey %>
-</p>
+<h1><%= @survey_response.survey.survey_name %></h1>
 
-<p>
-  <b>Survey responses:</b>
-  <%= @survey_response.survey_responses %>
-</p>
+<br><br>
 
+  <table class="table table-striped table-bordered">
+    <tr>
+      <th>Question</th>
+      <th>Answer</th>
+      <th colspan="4" style="text-align:right;"></th>
+    </tr>
 
-<%= link_to 'Edit', edit_survey_response_path(@survey_response) %> |
-<%= link_to 'Back', survey_responses_path %>
+    <% @responses[0].each do |response| %>
+      <tr>
+        <td><%= response[0].question_text %></td>
+        <td colspan="4">
+          <% if response[1].is_a? String %>
+            <%= response[1] %>
+          <% elsif response[0].question_type.single_option? %>
+            <%= response[1].option_text %>
+          <% elsif response[0].question_type.multi_option? && (response[1].is_a? Array) %>
+            <% response[1].each do |option| %>
+              <%= option.option_text %>
+              <% if option != response[1].last %>
+                <br>
+              <% end %>
+            <% end %>
+          <% elsif response[1].is_a? AnswerOption %>
+            <%= response[1].option_text %>
+          <% elsif response[1].to_i != 0 %>
+            <%= response[1] %>
+          <% end %>
+        </td>
+      </tr>
+    <% end %>
+   
+  </table>
+
+<%= link_to 'Back', survey_survey_responses_path(params[:survey_id]) %>
