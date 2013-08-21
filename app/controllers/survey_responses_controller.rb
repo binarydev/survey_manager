@@ -97,7 +97,7 @@ class SurveyResponsesController < ApplicationController
       
       survey_response.survey_responses.each do |question,response|
         
-        if (response.to_i > 0)
+        if (Question.find(question.to_i).question_type.single_option? && response.to_i > 0)
           @responses[x].push([ Question.find(question.to_i),AnswerOption.find(response.to_i) ])
         else
           if(Question.find(question.to_i).question_type.multi_option?)
