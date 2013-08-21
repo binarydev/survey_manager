@@ -14,7 +14,9 @@
   <tbody>
     <% @surveys.each do |survey| %>
       <tr>
-        <td><%= link_to survey.id, survey_path(survey) %></td>
+        <td>
+          <%= survey.id %>
+        </td>
         <td><%= survey.survey_name %></td>
         <td><%= survey.created_at.strftime("%B %d, %Y") %></td>
         <td>
