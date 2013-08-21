@@ -22,21 +22,25 @@
               survey_open_path(survey), :class => 'btn btn-mini btn-primary' %>
           <%= link_to 'View Responses',
                       survey_survey_responses_path(survey), :class => 'btn btn-mini' %>
-          <%= link_to t('.edit', :default => t("helpers.links.edit")),
-                      survey_path(survey), :class => 'btn btn-mini' %>
-          <%= link_to t('.rename', :default => t("helpers.links.rename")),
-                      edit_survey_path(survey), :class => 'btn btn-mini' %>
-          <%= link_to t('.destroy', :default => t("helpers.links.destroy")),
-                      survey_path(survey),
-                      :method => :delete,
-                      :data => { :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure?')) },
-                      :class => 'btn btn-mini btn-danger' %>
+          <% if current_user.email == 'jose@intermediapost.com' %>
+            <%= link_to t('.edit', :default => t("helpers.links.edit")),
+                        survey_path(survey), :class => 'btn btn-mini' %>
+            <%= link_to t('.rename', :default => t("helpers.links.rename")),
+                        edit_survey_path(survey), :class => 'btn btn-mini' %>
+            <%= link_to t('.destroy', :default => t("helpers.links.destroy")),
+                        survey_path(survey),
+                        :method => :delete,
+                        :data => { :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure?')) },
+                        :class => 'btn btn-mini btn-danger' %>
+          <% end %>
         </td>
       </tr>
     <% end %>
   </tbody>
 </table>
 
-<%= link_to t('.new', :default => t("helpers.links.new")),
-            new_survey_path,
-            :class => 'btn btn-primary' %>
+<% if current_user.email == 'jose@intermediapost.com' %>
+  <%= link_to t('.new', :default => t("helpers.links.new")),
+              new_survey_path,
+              :class => 'btn btn-primary' %>
+<% end %>

@@ -35,8 +35,10 @@
             <ul class="nav">
               <% if signed_in? %>
                 <li><%= link_to "Surveys", "/surveys"  %></li>
-                <li><%= link_to "Users", "/users"  %></li>
-                <li><%= link_to "Reports", "/reports"  %></li>
+                <% if current_user.email == 'jose@intermediapost.com' %>
+                  <li><%= link_to "Users", "/users"  %></li>
+                  <li><%= link_to "Reports", "/reports"  %></li>
+                <% end %>
                 <li><%= link_to "Sign out", sign_out_path, method: :delete %></li>
               <% else %>
                 <li><%= link_to "Sign in", sign_in_path %></li>
@@ -60,8 +62,10 @@
                 <li class="nav-header">Sections</li>
                 <% if signed_in? %>
                   <li><%= link_to "Surveys", "/surveys"  %></li>
-                  <li><%= link_to "Users", "/users"  %></li>
-                  <li><%= link_to "Reports", "/reports"  %></li>
+                  <% if current_user.email == 'jose@intermediapost.com' %>
+                    <li><%= link_to "Users", "/users"  %></li>
+                    <li><%= link_to "Reports", "/reports"  %></li>
+                  <% end %>
                   <li><%= link_to "Sign out", sign_out_path, method: :delete %></li>
                 <% else %>
                   <li><%= link_to "Sign in", sign_in_path %></li>

@@ -4,6 +4,9 @@
 
 <h3>Survey Responses</h3>
 
+<%= link_to "Select Random Response", survey_survey_response_path(@survey,@survey_responses.sample(random:1)), :class => "btn btn-primary" %>
+<br><br>
+
 <% @survey_responses.each_with_index do |survey_response, index| %>
   <table class="table table-striped table-bordered">
     <tr>
@@ -38,9 +41,12 @@
    
   </table>
   <p align="right">
-    <%= link_to 'Show', survey_survey_response_path(params[:survey_id],survey_response) %> | 
+    <%= link_to 'Show', survey_survey_response_path(params[:survey_id],survey_response) %> 
     <%#= link_to 'Edit', edit_survey_survey_response_path(@survey,survey_response) %>
-    <%= link_to 'Destroy', survey_survey_response_path(@survey, survey_response), method: :delete, data: { confirm: 'Are you sure?' } %></th>
+    <% if current_user.email == 'jose@intermediapost.com' %>
+    | 
+      <%= link_to 'Destroy', survey_survey_response_path(@survey, survey_response), method: :delete, data: { confirm: 'Are you sure?' } %></th>
+    <% end %>
   </p>
   <hr>
 <% end %>
