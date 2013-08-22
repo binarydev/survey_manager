@@ -1,0 +1,10 @@
+<% @field_values.each do |response| -%>
+<% response.each_with_index do |val, index| -%>
+<% if !val.blank? %>
+<%= val -%>
+<% if index < response.count-1 %>
+,
+<% end %>
+<% end %>
+<% end %>
+<% end -%>

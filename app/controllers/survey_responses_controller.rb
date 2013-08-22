@@ -12,6 +12,15 @@ class SurveyResponsesController < ApplicationController
       format.json { render json: @survey_responses }
     end
   end
+  
+  def export_csv
+    @survey = Survey.find(params[:survey_id])
+    @survey_responses = SurveyResponse.all
+    
+    convert_responses(@survey_responses)
+    @field_values = extract_field_values_from_responses([params[:question_id]])
+    
+  end
 
   # GET /survey_responses/1
   # GET /survey_responses/1.json
@@ -122,7 +131,37 @@ class SurveyResponsesController < ApplicationController
         @responses.delete r
       end
     end
+  end
+  
+  def extract_field_values_from_responses(question_ids)
+    question_responses = []
     
+    question_ids.each do |question_id|
+      field_values = []
+      question_id = question_id.to_s
+      @survey_responses.map do |resp|
+        if(resp.survey_responses[question_id] != nil)
+          question = Question.find(question_id.to_i)
+          val = ""
+          if(question.question_type.single_option? && resp.survey_responses[question_id].to_i != 0)
+            val = AnswerOption.find(resp.survey_responses[question_id].to_i).option_text
+          elsif(question.question_type.multi_option? && resp.survey_responses[question_id].to_i != 0)
+            val = AnswerOption.find(resp.survey_responses[question_id].to_i).option_text
+          else
+            val = resp.survey_responses[question_id]
+          end
+          
+          if(val != nil)
+            field_values << val
+          end
+        end
+      end
+      
+      if(field_values.count > 0)
+        question_responses << field_values
+      end
+    end
     
+    return question_responses
   end
 end

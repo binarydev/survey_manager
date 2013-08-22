@@ -8,6 +8,8 @@ SurveyManager::Application.routes.draw do
     get 'open' => "surveys#open"
     post 'submit_response' => "surveys#submit_response"
     post 'questions/bulk_update_order' => 'questions#bulk_update_order'
+    get 'export_csv' => 'survey_responses#export_csv'
+    
     
     resources :survey_responses
     
@@ -17,6 +19,7 @@ SurveyManager::Application.routes.draw do
       end
     end
   end
+  
 
 
   root :to => "surveys#index"
