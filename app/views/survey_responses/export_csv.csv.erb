@@ -1,9 +1,9 @@
 <% @field_values.each do |response| -%>
 <% response.each_with_index do |val, index| -%>
 <% if index < response.count-1 %>
-"<%= val.gsub("\r\n",", ") -%>",
+"<%= val.gsub("\n\r",",").gsub("\r",",").gsub(',,',',') -%>",
 <% else %>
-"<%= val.gsub("\r\n",", ") -%>"
+"<%= val.gsub("\n\r",",").gsub("\r",",").gsub(',,',',') -%>"
 <% end %>
 <% end %>
 <% end -%>
