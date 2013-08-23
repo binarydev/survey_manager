@@ -1,6 +1,6 @@
 <% @field_values.each do |response| -%>
 <% response.each_with_index do |val, index| -%>
-<%= val -%>
+"<%= val.gsub("\n",",") -%>"
 <% if index < response.count-1 %>
 ,
 <% end %>
