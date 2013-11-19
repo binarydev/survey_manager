@@ -112,10 +112,8 @@ class SurveyResponsesController < ApplicationController
           if(Question.find(question.to_i).question_type.multi_option?)
             
             options = response[1..response.length-2].split(',')
-            options.each_with_index do |option, index|
-              options[index] = AnswerOption.find(option.gsub(' ','').gsub('"','').to_i)
-            end
-            @responses[x].push([ Question.find(question.to_i), options ])
+            translated_options = options.map{ |x| AnswerOption.find(x.gsub(' ','').gsub('"','').to_i) unless x == " \"\"" }.compact
+            @responses[x].push([ Question.find(question.to_i), translated_options ])
             
           else
             @responses[x].push([ Question.find(question.to_i), response ])
