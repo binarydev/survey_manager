@@ -19,8 +19,8 @@ development:
   pool: 5
 #  username: josesantiagojr
 #  password: dev
-  username: jsantiago
-  password: 5pq$ukv
+  username: josesantiagojr
+  password: dev
 
   # Connect on a TCP socket. Omitted by default since the client uses a
   # domain socket that doesn't need configuration. Windows does not have

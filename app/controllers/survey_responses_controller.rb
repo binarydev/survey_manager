@@ -4,7 +4,7 @@ class SurveyResponsesController < ApplicationController
   def index
     @survey = Survey.find(params[:survey_id])
     @survey_responses = SurveyResponse.all
-    
+    @random_sample = @survey_responses.nil? ? nil : @survey_responses.sample(random:1)
     convert_responses(@survey_responses)
     
     respond_to do |format|
@@ -123,7 +123,7 @@ class SurveyResponsesController < ApplicationController
         end
       end
       
-      @responses[x] = @responses[x].sort_by{ |r| r[0].order_num}  
+      @responses[x] = @responses[x].sort_by{ |r| r[0].order_num.nil? ? 0 : r[0].order_num}  
     end
     
     @responses.each do |r|

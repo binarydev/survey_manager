@@ -4,7 +4,9 @@
 
 <h3>Survey Responses</h3>
 
-<%= link_to "Select Random Response", survey_survey_response_path(@survey,@survey_responses.sample(random:1)), :class => "btn btn-primary" %>
+<% if !@random_sample.nil? %>
+  <%= link_to "Select Random Response", survey_survey_response_url(@survey,@random_sample), :class => "btn btn-primary" %>
+<% end %>
 <br><br>
 
 <% @survey_responses.each_with_index do |survey_response, index| %>

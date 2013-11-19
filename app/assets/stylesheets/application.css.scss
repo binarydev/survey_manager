@@ -32,3 +32,26 @@
 li.unstyled{
   list-style-type: none;
 }
+
+.error{
+  color: #CC0000;
+  font-weight: bold;
+}
+
+input.error, textarea.error{
+  border: 1px solid #CC0000;
+}
+
+// style.css.scss
+.form-horizontal {
+  div.checkbox.inline {
+    .control-label {
+      text-align: left;
+    }
+  }
+}
+
+.survey_form_wrapper .checkbox, .survey_form_wrapper .radio{
+  margin-left:10px;
+  padding-left: 0px;
+}

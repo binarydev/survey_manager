@@ -26,6 +26,7 @@ class QuestionsController < ApplicationController
   def new
     @question = Question.new
     @survey = Survey.find(params[:survey_id])
+    @question.required_field = true
 
     respond_to do |format|
       format.html # new.html.erb
