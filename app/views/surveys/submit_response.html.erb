@@ -4,9 +4,21 @@
 </div>
 
 <% if !@survey.thankyou_text.blank? %>
+
+
+  <% if(params[:survey_response][:kiosk_mode] == 'true') %>
+    <script type="text/javascript">
+      alert("<%= @survey.thankyou_text %>");
+      window.location = ('/surveys/<%= @survey.id %>/open')
+    </script>
+    
+  
+  <% else %>
+
   <div>
     <h4>
     <%= @survey.thankyou_text %>
     </h4>
   </div>
+  <% end %>
 <% end %>
