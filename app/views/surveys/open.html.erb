@@ -3,7 +3,7 @@
 <% content_for :page_js do %>
  
   jQuery(document).ready(function(){
-    <% if params[:skip_val].nil? %>
+    <% if params[:skip_val].nil? || params[:skip_val] == '0' %>
       $("#new_survey_response").validate({
       	rules: {
       	
@@ -87,7 +87,7 @@
       <div class="divider"></div>
         <div class="divider"></div>
       <p>
-        <%= f.hidden_field 'kiosk_mode', :value => params[:skip_val].nil? %>
+        <%= f.hidden_field 'kiosk_mode', :value => (params[:skip_val].nil? ? 'true' : 'false') %>
         <%= f.button :submit, :class => 'btn-primary', :value => "Submit" %>
       </p>
     <% end %>
