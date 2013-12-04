@@ -87,7 +87,7 @@
       <div class="divider"></div>
         <div class="divider"></div>
       <p>
-        <%= f.hidden_field 'kiosk_mode', :value => (params[:skip_val].nil? ? 'true' : 'false') %>
+        <%= f.hidden_field 'kiosk_mode', :value => ((params[:skip_val].nil? || params[:skip_val] == '0') ? 'false' : 'true') %>
         <%= f.button :submit, :class => 'btn-primary', :value => "Submit" %>
       </p>
     <% end %>
