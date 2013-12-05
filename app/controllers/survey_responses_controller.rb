@@ -18,7 +18,15 @@ class SurveyResponsesController < ApplicationController
     @survey_responses = SurveyResponse.all
     
     convert_responses(@survey_responses)
+    @questions = extract_questions_from_responses(params[:question_id])
     @field_values = extract_field_values_from_responses([params[:question_id]])
+    @field_values.each do |respondent|
+      respondent.each do |response|
+        if(response.is_a? Array)
+          response = response.join(",")
+        end
+      end
+    end
     
   end
 
@@ -102,6 +110,9 @@ class SurveyResponsesController < ApplicationController
     survey_responses.each do |survey_response|
 
       x += 1
+      
+      # FINAL FORMAT = @responses[index of survey response submission][index of response to question][index of either question (0) or answer(1)]
+      
       @responses[x] = []
       
       survey_response.survey_responses.each do |question,response|
@@ -133,33 +144,55 @@ class SurveyResponsesController < ApplicationController
   
   def extract_field_values_from_responses(question_ids)
     question_responses = []
-    
-    question_ids.each do |question_id|
+      
+    @responses.each do |respondent|
       field_values = []
-      question_id = question_id.to_s
-      @survey_responses.map do |resp|
-        if(resp.survey_responses[question_id] != nil)
-          question = Question.find(question_id.to_i)
-          val = ""
-          if(question.question_type.single_option? && resp.survey_responses[question_id].to_i != 0)
-            val = AnswerOption.find(resp.survey_responses[question_id].to_i).option_text
-          elsif(question.question_type.multi_option? && resp.survey_responses[question_id].to_i != 0)
-            val = AnswerOption.find(resp.survey_responses[question_id].to_i).option_text
-          else
-            val = resp.survey_responses[question_id]
-          end
+      respondent.each do |resp|
+        
+        val = ""
+        
+        if(val != nil || resp[1] != nil)
+          if(resp[1].is_a? Array)
+            resp[1].each do |option|
+              if option != resp[1].last
+                val = "#{val}#{option.option_text},"
+              else
+                val = "#{val}#{option.option_text}"
+              end
+            end
+          elsif resp[1].is_a? AnswerOption
+            val = resp[1].option_text
+          elsif resp[1].is_a? String || resp[1].to_i != 0
+            val = resp[1]
+          end            
           
-          if(val != nil)
-            field_values << val
-          end
+          field_values << val
+
+        else
+          field_values << ""
         end
       end
-      
       if(field_values.count > 0)
         question_responses << field_values
       end
     end
+
     
     return question_responses
+  end
+  
+  def extract_questions_from_responses(question_ids)
+    questions = []
+      
+    @responses.first.each do |resp|
+      val = ""
+      if(resp[0] != nil)
+        val = resp[0].question_text
+      end        
+      questions << val
+    end
+
+    
+    return questions
   end
 end

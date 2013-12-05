@@ -1,9 +1,3 @@
-<% @field_values.each do |response| -%>
-<% response.each_with_index do |val, index| -%>
-<% if index < response.count-1 %>
-"<%= val.gsub("\n\r",",").gsub("\r",",") -%>",
-<% else %>
-"<%= val.gsub("\n\r",",").gsub("\r",",") -%>"
-<% end %>
-<% end %>
-<% end -%>
+<% @questions.each do |question| %><%if question != @questions.last%>"<%=question%>",<% else %>"<%=question%>"<% end %><% end -%>
+<% @field_values.each do |responses| -%><% responses.each_with_index do |val, index| -%><% if index < responses.count-1 -%>"<%= val.gsub("\n\r",",").gsub("\r",",") -%>",<% else -%>"<%= val.gsub("\n\r",",").gsub("\r",",") -%>"
+<% end -%><% end -%><% end -%>
