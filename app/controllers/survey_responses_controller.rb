@@ -184,7 +184,7 @@ class SurveyResponsesController < ApplicationController
   def extract_questions_from_responses(question_ids)
     questions = []
       
-    @responses.first.each do |resp|
+    @responses.last.each do |resp|
       val = ""
       if(resp[0] != nil)
         val = resp[0].question_text
