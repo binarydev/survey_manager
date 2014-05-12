@@ -73,7 +73,7 @@
               
               <% elsif question.question_type.open_ended_text? %>
               
-                <%= resp_form.text_area question.id.to_s, :placeholder => 'Enter Answer Here', :rows => 5, :cols => 30 %>
+                <%= resp_form.text_area question.id.to_s, :placeholder => 'Enter Answer Here', :rows => 10, :cols => 75 %>
               
               <% end %>
               
