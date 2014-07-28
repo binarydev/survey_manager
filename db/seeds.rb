@@ -9,3 +9,7 @@
 QuestionType.destroy_all
 
 QuestionType.create([{ type_name: 'Single Option'}, {type_name: 'Multi-Option'}, {type_name: 'Ranking'}, {type_name: 'Short Text'}, {type_name: 'Open-Ended Text'}])
+
+User.destroy_all
+
+User.create({email:'jose@impdigital.us',password:'w3lcome'})
