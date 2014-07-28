@@ -17,7 +17,12 @@ class Question < ActiveRecord::Base
   default_scope :order => :order_num
 
   def form_field_input_name
-    "survey_responses[#{self.id.to_s}]"
+    if(self.question_type.type_name == 'Multi-Option')
+      "survey_responses[#{self.id.to_s}][]"
+    else
+      "survey_responses[#{self.id.to_s}]"
+    end
+    
   end
 
   def form_field_id_name
