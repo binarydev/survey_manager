@@ -3,53 +3,42 @@
 <% content_for :page_js do %>
  
   jQuery(document).ready(function(){
-    <% if !params[:skip_val].to_i.nonzero? %>
-
-      <!-- FORM FIELDS REQUIRED -->
-      
-      $("#new_survey_response").validate({
-      	rules: {
-      	
-      	  <% @survey.questions.each_with_index do |question, index_num| %>
-      	    "<%= question.form_field_input_name %>": {
-        	    required: <%= question.required_field ? question.required_field : (question.is_email ? raw("$('##{question.form_field_input_name}[value=\"\"]').length > 0") : false) %>,
-        	    email: <%= question.is_email %>
-              <% if question.confirmation_for_question != nil %>
-                ,equalTo: "#<%= question.confirmation_for_question.form_field_input_name %>"
-              <% end %>
-      	    } <%= question == @survey.questions.last ? '' : ',' %>
-      	  <% end %>
-      	},
-      	messages: {
-      		<% @survey.questions.each_with_index do |question, index_num| %>
-      	    "<%= question.form_field_input_name %>": <%= raw(question.is_email ? "'Email address required'" : "'Field required'") %><%= raw(question == @survey.questions.last ? '' : ',') %>
-      	  <% end %>
-      	}
-      });
-    <% else %>
-      
-      <!-- FORM FIELDS NOT REQUIRED -->
-      
+  
       $("#new_survey_response").validate({
         rules: {
         
           <% @survey.questions.each_with_index do |question, index_num| %>
+
+            <% 
+              if params[:skip_val] == '1'
+                question_required = false
+              else
+                question_required = question.required_field ? question.required_field : (question.is_email ? "$('##{question.form_field_input_name}[value=\"\"]').length > 0" : false)
+              end 
+            %>
+
             "<%= raw(question.form_field_input_name) %>": {
-              required: false,
-              email: <%= question.is_email %>
+              required: <%= raw(question_required) %>,
+              email: <%= question.is_email %>,
               <% if question.confirmation_for_question != nil %>
-                ,equalTo: "#<%= question.confirmation_for_question.form_field_input_name %>"
+              equalTo: "#<%= raw(question.confirmation_for_question.form_field_id_name) %>",
               <% end %>
             } <%= question == @survey.questions.last ? '' : ',' %>
           <% end %>
         },
         messages: {
           <% @survey.questions.each_with_index do |question, index_num| %>
-            "<%= question.form_field_input_name %>": <%= raw(question.is_email ? "'Valid email address required'" : "'Field required'") %><%= raw(question == @survey.questions.last ? '' : ',') %>
+            "<%= raw(question.form_field_input_name) %>": {
+              required: <%= raw(question.is_email ? "'Email address required'" : "'Field required'") %>,
+              <% if question.confirmation_for_question != nil %>
+              equalTo: 'Does not match your answer to question #<%= question.confirmation_for_question.order_num+1 %>'
+              <% end %>
+            }<%= raw(question == @survey.questions.last ? '' : ',') %>
           <% end %>
         }
       });
-    <% end %>
+
+
   });
     
 <% end %>
