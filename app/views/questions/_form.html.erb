@@ -5,7 +5,7 @@
   <label>* Question Text:</label>
   <%= f.text_area :question_text, :style=>'width:300px;height:100px' %>
   <br><br>
-  <%= f.association :confirmation_for_question, label_method: lambda { |q| "#{q.order_num+1 unless q.order_num.nil?} - #{truncate(q.question_text, length: 75)}" } %>
+  <%= f.association :confirmation_for_question, collection: @survey.questions, label_method: lambda { |q| "#{q.order_num+1 unless q.order_num.nil?} - #{truncate(q.question_text, length: 75)}" } %>
   <%= f.label :confirmation_for_question, 'Use as input confirmation for the following question', :class => 'inline checkbox', :style => 'margin-left:0px;padding-left:0px' %>
   <br><br>
   <%= f.input_field :required_field, :as => :boolean, :class => 'inline checkbox' %>
