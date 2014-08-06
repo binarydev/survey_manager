@@ -21,12 +21,14 @@
 <table class="table table-striped items-table">
   <tr>
     <th width="150px">Type</th>
+    <th width="50px">#</th>
     <th>Text</th>
     <th width="150px"></th>
   </tr>
   <% @survey.questions.each do |question| %>
     <tr>
       <td><%= question.question_type.type_name %></td>
+      <td><%= question.order_num + 1 %></td>
       <td><%= truncate(question.question_text, :length => 200, :separator => " ") %></td>
       <td>
           <%= link_to t('.view', :default => t("helpers.links.view")),
@@ -46,7 +48,7 @@
 
 <ul class="sortable inline-block">
   <% @survey.questions.each do |question| %>
-    <li class="icon-resize-vertical listing-item" id="<%= question.id %>">&nbsp;&nbsp;<%= question.question_text %><br></li>
+    <li class="icon-resize-vertical listing-item" id="<%= question.id %>">&nbsp;&nbsp;<%= question.order_num + 1 %> - <%= question.question_text %><br></li>
   <% end %>
 </ul>
 
