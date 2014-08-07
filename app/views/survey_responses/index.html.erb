@@ -45,7 +45,7 @@
   <p align="right">
     <%= link_to 'Show', survey_survey_response_path(params[:survey_id],survey_response) %> 
     <%#= link_to 'Edit', edit_survey_survey_response_path(@survey,survey_response) %>
-    <% if current_user.email == 'jose@intermediapost.com' %>
+    <% if current_user.email == 'jose@impdigital.us' %>
     | 
       <%= link_to 'Destroy', survey_survey_response_path(@survey, survey_response), method: :delete, data: { confirm: 'Are you sure?' } %></th>
     <% end %>
