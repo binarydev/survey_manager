@@ -24,7 +24,7 @@
               survey_open_path(survey), :class => 'btn btn-mini btn-primary' %>
           <%= link_to 'View Responses',
                       survey_survey_responses_path(survey), :class => 'btn btn-mini' %>
-          <% if current_user.email == 'jose@impdigital.us' %>
+          <% if current_user.email == 'jose@intermediapost.com' %>
             <%= link_to t('.edit', :default => t("helpers.links.edit")),
                         survey_path(survey), :class => 'btn btn-mini' %>
             <%= link_to t('.rename', :default => t("helpers.links.rename")),
@@ -41,7 +41,7 @@
   </tbody>
 </table>
 
-<% if current_user.email == 'jose@impdigital.us' %>
+<% if current_user.email == 'jose@intermediapost.com' %>
   <%= link_to t('.new', :default => t("helpers.links.new")),
               new_survey_path,
               :class => 'btn btn-primary' %>

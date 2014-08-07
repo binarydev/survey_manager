@@ -12,4 +12,4 @@ QuestionType.create([{ type_name: 'Single Option'}, {type_name: 'Multi-Option'},
 
 User.destroy_all
 
-User.create({email:'jose@impdigital.us',password:'w3lcome'})
+User.create({email:'jose@intermediapost.com',password:'w3lcome'})

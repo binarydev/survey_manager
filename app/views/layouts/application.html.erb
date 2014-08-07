@@ -35,7 +35,7 @@
             <ul class="nav">
               <% if signed_in? %>
                 <li><%= link_to "Surveys", "/surveys"  %></li>
-                <% if current_user.email == 'jose@impdigital.us' %>
+                <% if current_user.email == 'jose@intermediapost.com' %>
                   <li><%= link_to "Users", "/users"  %></li>
                   <li><%= link_to "Reports", "/reports"  %></li>
                 <% end %>
@@ -62,7 +62,7 @@
                 <li class="nav-header">Sections</li>
                 <% if signed_in? %>
                   <li><%= link_to "Surveys", "/surveys"  %></li>
-                  <% if current_user.email == 'jose@impdigital.us' %>
+                  <% if current_user.email == 'jose@intermediapost.com' %>
                     <li><%= link_to "Users", "/users"  %></li>
                     <li><%= link_to "Reports", "/reports"  %></li>
                   <% end %>
