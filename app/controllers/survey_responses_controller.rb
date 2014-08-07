@@ -114,30 +114,41 @@ class SurveyResponsesController < ApplicationController
       # FINAL FORMAT = @responses[index of survey response submission][index of response to question][index of either question (0) or answer(1)]
       
       @responses[x] = []
-      
-      survey_response.survey_responses.each do |question,response|
-        
-        if (Question.find(question.to_i).question_type.single_option? && response.to_i > 0)
-          @responses[x].push([ Question.find(question.to_i),AnswerOption.find(response.to_i) ])
-        else
-          if(Question.find(question.to_i).question_type.multi_option?)
-            
-            options = response[1..response.length-2].split(',')
-            translated_options = options.map{ |x| AnswerOption.find(x.gsub(' ','').gsub('"','').to_i) unless x.gsub(' ','').gsub('"','').to_i == 0 }.compact
-            @responses[x].push([ Question.find(question.to_i), translated_options ])
-            
-          else
-            @responses[x].push([ Question.find(question.to_i), response ])
-          end
-        end
+
+      survey_response.survey.questions.each do |q|
+          @responses[x].push([q,nil])
       end
       
-      @responses[x] = @responses[x].sort_by{ |r| r[0].order_num.nil? ? 0 : r[0].order_num}  
-    end
+      survey_response.survey_responses.each do |question,response|
+  
+          @responses[x].each do |resp|
+              if(resp[0].id == question.to_i)
+              
+                  if (resp[0].question_type.single_option? && response.to_i > 0)
+                    resp[1] = AnswerOption.find(response.to_i)
+                  else
+                    
+                      if(resp[0].question_type.multi_option?)
+                          options = response[1..response.length-2].split(',')
+                          translated_options = options.map{ |x| AnswerOption.find(x.gsub(' ','').gsub('"','').to_i) unless x.gsub(' ','').gsub('"','').to_i == 0 }.compact
+                          resp[1] = translated_options
+                      else
+                          resp[1] =  response
+                      end
+
+                  end
+
+              end
+          
+              @responses[x] = @responses[x].sort_by{ |r| r[0].order_num.nil? ? 0 : r[0].order_num}  
+          end
+
+      end
     
-    @responses.each do |r|
-      if r.nil?
-        @responses.delete r
+      @responses.each do |r|
+        if r.nil?
+          @responses.delete r
+        end
       end
     end
   end

@@ -1,3 +1,3 @@
-<% @questions.each do |question| %><%if question != @questions.last%>"<%=raw(question.gsub("\"","'"))%>",<% else %>"<%=raw(question.gsub("\"","'"))%>"<% end %><% end -%>
+<% @questions.each do |question| %><%if question != @questions.last%>"<%=raw(question.question_text.gsub("\"","'"))%>",<% else %>"<%=raw(question.question_text.gsub("\"","'"))%>"<% end %><% end -%>
 <% @field_values.each do |responses| -%><% responses.each_with_index do |val, index| -%><% if index < responses.count-1 -%>"<%= raw(val.gsub("\n\r",",").gsub("\r",",").gsub("\"","'")) -%>",<% else -%>"<%= raw(val.gsub("\n\r",",").gsub("\r",",").gsub("\"","'")) -%>"
 <% end -%><% end -%><% end -%>

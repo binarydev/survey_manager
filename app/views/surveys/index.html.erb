@@ -25,7 +25,7 @@
           <%= link_to 'View Responses',
                       survey_survey_responses_path(survey), :class => 'btn btn-mini' %>
           <%= link_to 'Export Responses',
-                      survey_export_csv_path(survey), :class => 'btn btn-mini' %>
+                      survey_export_csv_path(survey, 'csv'), :class => 'btn btn-mini' %>
           <% if current_user.email == 'jose@intermediapost.com' %>
             <%= link_to t('.edit', :default => t("helpers.links.edit")),
                         survey_path(survey), :class => 'btn btn-mini' %>
