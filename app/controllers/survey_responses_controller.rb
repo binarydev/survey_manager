@@ -18,7 +18,7 @@ class SurveyResponsesController < ApplicationController
     @survey_responses = @survey.survey_responses.all
     
     convert_responses(@survey_responses)
-    @questions = extract_questions_from_responses(params[:question_id])
+    @questions = @survey.questions
     @field_values = extract_field_values_from_responses([params[:question_id]])
     @field_values.each do |respondent|
       respondent.each do |response|
@@ -151,7 +151,7 @@ class SurveyResponsesController < ApplicationController
         
         val = ""
         
-        if(val != nil || resp[1] != nil)
+        if(resp[1] != nil)
           if(resp[1].is_a? Array)
             resp[1].each do |option|
               if option != resp[1].last
