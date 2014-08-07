@@ -4,4 +4,5 @@ class SurveyResponse < ActiveRecord::Base
   attr_accessor :kiosk_mode
   serialize :survey_responses, ActiveRecord::Coders::Hstore
   validates_presence_of :survey_id
+  default_scope :order => :created_at
 end

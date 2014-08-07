@@ -3,7 +3,7 @@ class SurveyResponsesController < ApplicationController
   # GET /survey_responses.json
   def index
     @survey = Survey.find(params[:survey_id])
-    @survey_responses = SurveyResponse.all
+    @survey_responses = @survey.survey_responses.all
     @random_sample = @survey_responses.nil? ? nil : @survey_responses.sample(random:1)
     convert_responses(@survey_responses)
     
@@ -15,7 +15,7 @@ class SurveyResponsesController < ApplicationController
   
   def export_csv
     @survey = Survey.find(params[:survey_id])
-    @survey_responses = SurveyResponse.all
+    @survey_responses = @survey.survey_responses.all
     
     convert_responses(@survey_responses)
     @questions = extract_questions_from_responses(params[:question_id])
